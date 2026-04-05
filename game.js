@@ -49,9 +49,9 @@ let mobile = {
 let joystickBase = null;
 let joystickKnob = null;
 let joystickPointerId = null;
-let joystickCenter = { x: 120, y: 0 };
+let joystickCenter = { x: 140, y: 0 };
 let joystickVector = { x: 0, y: 0 };
-const JOYSTICK_RADIUS = 45;
+const JOYSTICK_RADIUS = 70;
 
 // ---------------- UI ----------------
 let p1Bar, p2Bar, enemyBar;
@@ -187,7 +187,7 @@ function createPlayers(scene) {
 
 // ---------------- JOYSTICK ----------------
 function createJoystick(scene) {
-    joystickCenter.y = window.innerHeight - 110;
+    joystickCenter.y = window.innerHeight - 140;
 
     joystickBase = scene.add.circle(
         joystickCenter.x,
@@ -200,7 +200,7 @@ function createJoystick(scene) {
     joystickKnob = scene.add.circle(
         joystickCenter.x,
         joystickCenter.y,
-        22,
+        35,
         0xcccccc,
         0.8
     ).setScrollFactor(0);
@@ -215,7 +215,7 @@ function createJoystick(scene) {
             joystickCenter.y
         );
 
-        if (dist <= JOYSTICK_RADIUS + 30 && joystickPointerId === null) {
+        if (dist <= JOYSTICK_RADIUS + 40 && joystickPointerId === null) {
             joystickPointerId = pointer.id;
             updateJoystick(pointer);
         }
@@ -269,23 +269,26 @@ function resetJoystick() {
 // ---------------- MOBILE ATTACK BUTTONS ----------------
 function createMobileActionButtons(scene) {
     function btn(x, y, label, press, release) {
-        let b = scene.add.circle(x, y, 32, 0x444444, 0.85).setInteractive();
-        scene.add.text(x - 10, y - 12, label, { fill: "#fff" });
+        let b = scene.add.circle(x, y, 50, 0x444444, 0.85).setInteractive();
+        scene.add.text(x - 14, y - 18, label, {
+            fill: "#fff",
+            fontSize: "28px"
+        });
 
         b.on("pointerdown", press);
         b.on("pointerup", release);
         b.on("pointerout", release);
     }
 
-    btn(window.innerWidth - 150, window.innerHeight - 70, "A",
+    btn(window.innerWidth - 180, window.innerHeight - 80, "A",
         () => mobile.attack = true,
         () => mobile.attack = false);
 
-    btn(window.innerWidth - 80, window.innerHeight - 130, "S",
+    btn(window.innerWidth - 95, window.innerHeight - 155, "S",
         () => mobile.strong = true,
         () => mobile.strong = false);
 
-    btn(window.innerWidth - 40, window.innerHeight - 60, "H",
+    btn(window.innerWidth - 40, window.innerHeight - 70, "H",
         () => mobile.heal = true,
         () => mobile.heal = false);
 }
